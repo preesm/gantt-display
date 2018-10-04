@@ -31,6 +31,7 @@
 package org.ietr.ganttdisplay;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -80,7 +81,8 @@ public class GanttDisplay {
 				"Solution Gantt", "Operators", "Time", null, true, true, false));
 		chartPanel.setPreferredSize(new java.awt.Dimension(
 				GanttPlotter.xDimension, GanttPlotter.yDimension));
-		chartPanel.setMouseZoomable(true, false);
+		chartPanel.setMouseZoomable(true, true);
+	    chartPanel.setMouseWheelEnabled(true);
 		frame.add(chartPanel);
 
 		// Set the default close operation for the window, or else the
@@ -94,6 +96,10 @@ public class GanttDisplay {
 		frame.pack();
 
 		button.addActionListener(new RefreshActionListener(chartPanel, file));
+		
+		// Refresh by default
+		final ActionEvent actionEvent = new ActionEvent(button, ActionEvent.ACTION_PERFORMED, "Anything", 0, 0);
+		button.getActionListeners()[0].actionPerformed(actionEvent);
 	}
 
 	/**
