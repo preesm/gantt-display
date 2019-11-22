@@ -65,8 +65,8 @@ public class GanttPlotter {
 	/**
 	 * Initial dimensions of the window
 	 */
-	public final static int xDimension = 700;
-	public final static int yDimension = 700;
+	public static final int xDimension = 700;
+	public static final int yDimension = 500;
 
 	/**
 	 * Creates a chart.
@@ -76,7 +76,7 @@ public class GanttPlotter {
 	 *
 	 * @return A chart.
 	 */
-	private JFreeChart createChart(Gantt gantt, IntervalCategoryDataset dataset) {
+	private static JFreeChart createChart(Gantt gantt, IntervalCategoryDataset dataset) {
 
 		JFreeChart chart = ChartFactory.createGanttChart("Solution Gantt", // title
 				"Operators", // x-axis label
@@ -132,7 +132,7 @@ public class GanttPlotter {
 	 *
 	 * @param gantt the input data
 	 */
-	private IntervalCategoryDataset createDataset(Gantt gantt) {
+	private static IntervalCategoryDataset createDataset(Gantt gantt) {
 
 		TaskSeries series = new TaskSeries("Scheduled");
 		Map<String,Long> seriesDurations = new HashMap<String,Long>();
@@ -189,7 +189,7 @@ public class GanttPlotter {
 	/**
 	 * Creates the background color
 	 */
-	public LinearGradientPaint getBackgroundColorGradient() {
+	public static LinearGradientPaint getBackgroundColorGradient() {
 		Point2D start = new Point2D.Float(0, 0);
 		Point2D end = new Point2D.Float(xDimension, yDimension);
 		float[] dist = { 0.0f, 0.8f };

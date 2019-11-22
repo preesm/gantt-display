@@ -41,12 +41,11 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRendererState;
 import org.jfree.chart.renderer.category.GanttRenderer;
-import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.gantt.GanttCategoryDataset;
 import org.jfree.data.gantt.TaskSeriesCollection;
+import org.jfree.chart.ui.RectangleEdge;
 
 /**
  * This renderer plots rounded rectangles
@@ -115,36 +114,7 @@ public class MyGanttRenderer extends GanttRenderer {
 			double rectBreadth = state.getBarWidth();
 
 			// DRAW THE BARS...
-			RoundRectangle2D bar = null;
-
-			if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
-				bar = new RoundRectangle2D.Double(translatedValue0, rectStart, rectLength, rectBreadth, 10.0, 10.0);
-			} else if (plot.getOrientation() == PlotOrientation.VERTICAL) {
-				bar = new RoundRectangle2D.Double(rectStart, translatedValue0, rectBreadth, rectLength, 10.0, 10.0);
-			}
-
-			RoundRectangle2D completeBar = null;
-			RoundRectangle2D incompleteBar = null;
-			Number percent = dataset.getPercentComplete(row, column, subinterval);
-			double start = getStartPercent();
-			double end = getEndPercent();
-			if (percent != null) {
-				double p = percent.doubleValue();
-				if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
-					completeBar = new RoundRectangle2D.Double(translatedValue0, rectStart + start * rectBreadth,
-							rectLength * p, rectBreadth * (end - start), 10.0, 10.0);
-					incompleteBar = new RoundRectangle2D.Double(translatedValue0 + rectLength * p,
-							rectStart + start * rectBreadth, rectLength * (1 - p), rectBreadth * (end - start), 10.0,
-							10.0);
-				} else if (plot.getOrientation() == PlotOrientation.VERTICAL) {
-					completeBar = new RoundRectangle2D.Double(rectStart + start * rectBreadth,
-							translatedValue0 + rectLength * (1 - p), rectBreadth * (end - start), rectLength * p, 10.0,
-							10.0);
-					incompleteBar = new RoundRectangle2D.Double(rectStart + start * rectBreadth, translatedValue0,
-							rectBreadth * (end - start), rectLength * (1 - p), 10.0, 10.0);
-				}
-
-			}
+			RoundRectangle2D bar = new RoundRectangle2D.Double(translatedValue0, rectStart, rectLength, rectBreadth, 10.0, 10.0);
 
 			/* Paint seriesPaint = */getItemPaint(row, column);
 
@@ -154,14 +124,7 @@ public class MyGanttRenderer extends GanttRenderer {
 						g2.setPaint(getColor(((TaskSeriesCollection) dataset).getSeries(0).get(column)
 								.getSubtask(subinterval).getDescription()));
 			g2.fill(bar);
-			if (completeBar != null) {
-				g2.setPaint(getCompletePaint());
-				g2.fill(completeBar);
-			}
-			if (incompleteBar != null) {
-				g2.setPaint(getIncompletePaint());
-				g2.fill(incompleteBar);
-			}
+
 			if (isDrawBarOutline() && state.getBarWidth() > BAR_OUTLINE_WIDTH_THRESHOLD) {
 				g2.setStroke(getItemStroke(row, column));
 				g2.setPaint(getItemOutlinePaint(row, column));
