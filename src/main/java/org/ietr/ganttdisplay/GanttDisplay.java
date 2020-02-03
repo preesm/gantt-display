@@ -80,7 +80,7 @@ public class GanttDisplay {
 		ChartPanel chartPanel = new ChartPanel(ChartFactory.createGanttChart(
 				"Solution Gantt", "Operators", "Time", null, true, true, false));
 		chartPanel.setPreferredSize(new java.awt.Dimension(
-				GanttPlotter.xDimension, GanttPlotter.yDimension));
+				GanttPlotter.X_DIM, GanttPlotter.Y_DIM));
 		chartPanel.setMouseZoomable(true, true);
 	    chartPanel.setMouseWheelEnabled(true);
 		frame.add(chartPanel);
