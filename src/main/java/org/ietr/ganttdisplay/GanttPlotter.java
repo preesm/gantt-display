@@ -32,10 +32,10 @@ package org.ietr.ganttdisplay;
 import java.awt.Color;
 import java.awt.LinearGradientPaint;
 import java.awt.Paint;
-import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.ietr.ganttdisplay.model.Gantt;
 import org.ietr.ganttdisplay.model.GanttElement;
@@ -65,8 +65,8 @@ public class GanttPlotter {
 	/**
 	 * Initial dimensions of the window
 	 */
-	public static final int xDimension = 700;
-	public static final int yDimension = 500;
+	public static final int X_DIM = 700;
+	public static final int Y_DIM = 500;
 
 	/**
 	 * Creates a chart.
@@ -135,9 +135,9 @@ public class GanttPlotter {
 	private static IntervalCategoryDataset createDataset(Gantt gantt) {
 
 		TaskSeries series = new TaskSeries("Scheduled");
-		Map<String,Long> seriesDurations = new HashMap<String,Long>();
+		Map<String,Long> seriesDurations = new HashMap<>();
 
-		for(String mapping : gantt.getMappings()){
+		for (String mapping : gantt.getMappings()){
 			Task currenttask;
 
 			currenttask = new Task(mapping, new SimpleTimePeriod(0, 1));
@@ -145,7 +145,7 @@ public class GanttPlotter {
 			seriesDurations.put(mapping, 0l);
 		}
 
-		for(GanttElement element : gantt.getElementSet()){
+		for (GanttElement element : gantt.getElementSet()){
 			Task t = new Task(element.getTitle(), new SimpleTimePeriod(element.getStart(), element.getEnd()));
 			series.get(element.getMapping()).addSubtask(t);
 
@@ -154,9 +154,9 @@ public class GanttPlotter {
 		}
 
 
-		for(String mapping : seriesDurations.keySet()){
-			series.get(mapping).setDuration(
-					new SimpleTimePeriod(0, seriesDurations.get(mapping)));
+		for (Entry<String, Long> mapping : seriesDurations.entrySet()){
+			series.get(mapping.getKey()).setDuration(
+					new SimpleTimePeriod(0, mapping.getValue()));
 		}
 
 
@@ -180,22 +180,14 @@ public class GanttPlotter {
 
 	}
 
-	public void windowClosing(WindowEvent event) {
-		if (event.equals(WindowEvent.WINDOW_CLOSING)) {
-
-		}
-	}
-
 	/**
 	 * Creates the background color
 	 */
 	public static LinearGradientPaint getBackgroundColorGradient() {
 		Point2D start = new Point2D.Float(0, 0);
-		Point2D end = new Point2D.Float(xDimension, yDimension);
+		Point2D end = new Point2D.Float(X_DIM, Y_DIM);
 		float[] dist = { 0.0f, 0.8f };
 		Color[] colors = { new Color(170, 160, 190), Color.WHITE };
-		LinearGradientPaint p = new LinearGradientPaint(start, end, dist,
-				colors);
-		return p;
+		return new LinearGradientPaint(start, end, dist, colors);
 	}
 }

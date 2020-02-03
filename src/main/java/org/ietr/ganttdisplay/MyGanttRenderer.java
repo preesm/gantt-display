@@ -43,9 +43,9 @@ import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.CategoryItemRendererState;
 import org.jfree.chart.renderer.category.GanttRenderer;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.gantt.GanttCategoryDataset;
 import org.jfree.data.gantt.TaskSeriesCollection;
-import org.jfree.chart.ui.RectangleEdge;
 
 /**
  * This renderer plots rounded rectangles
@@ -61,7 +61,7 @@ public class MyGanttRenderer extends GanttRenderer {
 	/**
 	 * Map of the task colors
 	 */
-	HashMap<String, Color> colorMap = new HashMap<String, Color>();
+	private HashMap<String, Color> colorMap = new HashMap<>();
 
 	/**
 	 * Draws the tasks/subtasks for one item.
